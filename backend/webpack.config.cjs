@@ -1,18 +1,18 @@
 const path = require('path');
 
 module.exports = {
-  entry: '/', // Adjust the entry point as needed
+  entry: './src/lambda/authorization/authAuthorizer.mjs',
   target: 'node',
   mode: 'production',
   output: {
-    path: path.resolve(__dirname, 'dist'),
-    filename: 'handler.js',
-    libraryTarget: 'commonjs2'
+    libraryTarget: 'commonjs',
+    path: path.join(__dirname, '.webpack'),
+    filename: '[name].js',
   },
   module: {
     rules: [
       {
-        test: /\.js$/,
+        test: /\.mjs$/,
         exclude: /node_modules/,
         use: {
           loader: 'babel-loader',
@@ -22,5 +22,8 @@ module.exports = {
         }
       }
     ]
+  },
+  resolve: {
+    extensions: ['.mjs', '.js']
   }
 };

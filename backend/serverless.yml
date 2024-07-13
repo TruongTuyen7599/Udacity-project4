@@ -6,6 +6,7 @@ plugins:
   - serverless-webpack
   - serverless-iam-roles-per-function
   - serverless-plugin-tracing
+  - serverless-offline
   # - serverless-reqvalidator-plugin
   # - serverless-aws-documentation
 
@@ -35,14 +36,22 @@ provider:
     restApi: true
 
 functions:
-  # hello:
-  #   handler: handler.hello
-  #   events:
-  #     - httpApi:
-  #         path: /
-  #         method: get
+
   Auth:
     handler: src/lambda/auth/auth0Authorizer.handler
+    package:
+      patterns:
+        - src/lambda/auth/auth0Authorizer.mjs
+    # events:
+    #   - http:
+    #       path: authorization
+    #       method: post
+    #       cors: true
+    # iamRoleStatements:
+    #   - Effect: "Allow"
+    #     Action:
+    #       - "dynamodb:Query"
+    #     Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.TODOS_TABLE}
 
    # TODO: Configure this function
   GetTodos:
